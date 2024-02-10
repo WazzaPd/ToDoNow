@@ -14,18 +14,33 @@ function addTodo() {
     updateUI()
 }
 
+function editTodo(index) {
+    textarea.value = todoList[index]
+
+    deleteTodo(index)
+}
+
+function deleteTodo(index) {
+    todoList = todoList.filter((element, elementIndex) => {
+        if (index === elementIndex){ return false}
+        return true
+    })
+
+    updateUI()
+}
+
 function updateUI() {
     let newInnerHtml = ""
 
-    todoList.forEach((todoElement) => {
+    todoList.forEach((todoElement, todoIndex) => {
         newInnerHtml += `
         <div class="todo">
             <p>${todoElement}</p>
             <div class = btnContainer>
-                <button class="iconBtn">
+                <button class="iconBtn" onclick="editTodo(${todoIndex})">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </button>
-                <button class="iconBtn">
+                <button class="iconBtn" onclick="deleteTodo(${todoIndex})">
                     <i class="fa-solid fa-trash"></i>
                 </button>
             </div>
@@ -34,7 +49,6 @@ function updateUI() {
     })
 
     todoContainer.innerHTML = newInnerHtml
-    console.log(todoList)
 }
 
 addBtn.addEventListener('click', addTodo)
